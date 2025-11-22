@@ -1,92 +1,92 @@
-# 🏗️ Architecture Système PTVEM
+# 🏗️ Системная архитектура PTVEM
 
-## Vue d'Ensemble
-PTVEM utilise une architecture microservices modulaire avec 9 services spécialisés, permettant une scalabilité indépendante et une maintenance simplifiée.
+## Обзор
+PTVEM использует модульную микросервисную архитектуру с 9 специализированными сервисами, что позволяет независимое масштабирование и упрощает обслуживание.
 
-## Services et Responsabilités
+## Сервисы и обязанности
 
-### 📦 Product Service
-**Responsabilités :**
-- Gestion du catalogue produits
-- Génération et validation des QR codes
-- Authenticité des produits
-- Gestion des collections et designs
+### 📦 Сервис продуктов (Product Service)
+**Обязанности:**
+- Управление каталогом продуктов
+- Генерация и валидация QR-кодов
+- Проверка подлинности продуктов
+- Управление коллекциями и дизайнами
 
-**APIs Principales :**
-- `POST /api/products` - Créer un produit
-- `GET /api/products/{qrCode}` - Obtenir un produit par QR code
-- `POST /api/products/{id}/qr` - Régénérer un QR code
-- `GET /api/products/{id}/details` - Détails complets du produit
+**Основные API:**
+- `POST /api/products` - Создать продукт
+- `GET /api/products/{qrCode}` - Получить продукт по QR-коду
+- `POST /api/products/{id}/qr` - Перегенерировать QR-код
+- `GET /api/products/{id}/details` - Полная информация о продукте
 
-### 👤 Ownership Service
-**Responsabilités :**
-- Suivi de la chaîne de propriété
-- Transfert de propriété
-- Historique des propriétaires
-- Gestion des consentements de visibilité
+### 👤 Сервис владения (Ownership Service)
+**Обязанности:**
+- Отслеживание цепочки владения
+- Передача права собственности
+- История владельцев
+- Управление согласиями на видимость
 
-**APIs Principales :**
-- `POST /api/ownership/transfer` - Transférer la propriété
-- `GET /api/ownership/{productId}/history` - Obtenir l'historique
-- `PUT /api/ownership/{productId}/consent` - Gérer le consentement
-- `GET /api/ownership/user/{userId}` - Produits possédés par un utilisateur
+**Основные API:**
+- `POST /api/ownership/transfer` - Передать право собственности
+- `GET /api/ownership/{productId}/history` - Получить историю
+- `PUT /api/ownership/{productId}/consent` - Управлять согласием
+- `GET /api/ownership/user/{userId}` - Продукты, принадлежащие пользователю
 
-### 📖 Story Service
-**Responsabilités :**
-- Gestion des histoires utilisateur
-- Modération du contenu
-- Timeline des produits
-- Photos et récits associés
+### 📖 Сервис историй (Story Service)
+**Обязанности:**
+- Управление пользовательскими историями
+- Модерация контента
+- Хронология продуктов
+- Связанные фото и рассказы
 
-**APIs Principales :**
-- `POST /api/stories` - Ajouter une histoire
-- `GET /api/stories/{productId}` - Obtenir les histoires d'un produit
-- `PUT /api/stories/{storyId}` - Modifier une histoire
-- `DELETE /api/stories/{storyId}` - Supprimer une histoire
+**Основные API:**
+- `POST /api/stories` - Добавить историю
+- `GET /api/stories/{productId}` - Получить истории продукта
+- `PUT /api/stories/{storyId}` - Изменить историю
+- `DELETE /api/stories/{storyId}` - Удалить историю
 
-### 💰 Resale Service
-**Responsabilités :**
-- Marketplace de revente
-- Transactions entre utilisateurs
-- Calcul des prix de revente
-- Gestion des listings
+### 💰 Сервис перепродажи (Resale Service)
+**Обязанности:**
+- Маркетплейс перепродажи
+- Транзакции между пользователями
+- Расчет цен перепродажи
+- Управление списками
 
-**APIs Principales :**
-- `POST /api/resale/listings` - Lister un produit en revente
-- `GET /api/resale/listings` - Voir les produits en revente
-- `POST /api/resale/transactions` - Initier une transaction
-- `PUT /api/resale/listings/{listingId}` - Modifier un listing
+**Основные API:**
+- `POST /api/resale/listings` - Разместить продукт для перепродажи
+- `GET /api/resale/listings` - Просмотр продуктов для перепродажи
+- `POST /api/resale/transactions` - Инициировать транзакцию
+- `PUT /api/resale/listings/{listingId}` - Изменить список
 
-### 🔐 Auth Service
-**Responsabilités :**
-- Authentification des utilisateurs
-- Gestion des sessions
-- Autorisations et rôles
-- Sécurité des APIs
+### 🔐 Сервис аутентификации (Auth Service)
+**Обязанности:**
+- Аутентификация пользователей
+- Управление сессиями
+- Права доступа и роли
+- Безопасность API
 
-**APIs Principales :**
-- `POST /api/auth/register` - Créer un compte
-- `POST /api/auth/login` - Se connecter
-- `POST /api/auth/logout` - Se déconnecter
-- `GET /api/auth/verify` - Vérifier un token
+**Основные API:**
+- `POST /api/auth/register` - Создать аккаунт
+- `POST /api/auth/login` - Войти в систему
+- `POST /api/auth/logout` - Выйти из системы
+- `GET /api/auth/verify` - Проверить токен
 
-## Architecture Technique
+## Техническая архитектура
 
-### Stack Technologique
-- **Backend** : Node.js, TypeScript, Express
-- **Base de données** : MongoDB (données principales), Redis (cache)
-- **API** : RESTful avec documentation OpenAPI
-- **Authentification** : JWT Tokens
-- **Stockage** : AWS S3 pour les médias
+### Технологический стек
+- **Backend**: Node.js, TypeScript, Express
+- **Базы данных**: MongoDB (основные данные), Redis (кэш)
+- **API**: RESTful с документацией OpenAPI
+- **Аутентификация**: JWT токены
+- **Хранилище**: AWS S3 для медиафайлов
 
-### Communication entre Services
-- Synchronous : REST APIs pour les opérations critiques
-- Asynchronous : Message Queue pour les notifications
-- Event-Driven : Événements pour les mises à jour en temps réel
+### Коммуникация между сервисами
+- Синхронная: REST API для критических операций
+- Асинхронная: Очередь сообщений для уведомлений
+- Событийная: События для обновлений в реальном времени
 
-## Sécurité
+## Безопасность
 
-- Validation des données d'entrée
-- Rate limiting sur les APIs
-- Chiffrement des données sensibles
-- Audit des actions utilisateur
+- Валидация входных данных
+- Ограничение частоты запросов (Rate limiting) для API
+- Шифрование конфиденциальных данных
+- Аудит действий пользователей
