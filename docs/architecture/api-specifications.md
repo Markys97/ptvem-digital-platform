@@ -1,6 +1,5 @@
 # 📋 **CODE COMPLET POUR API-SPECIFICATIONS.md**
 
-````markdown
 # 🔗 Спецификации API PTVEM
 
 ## Обзор
@@ -38,8 +37,6 @@
   "qrCode": "PTVEM-ABC123-XYZ789"
 }
 ```
-````
-
 #### POST /products
 
 **Описание:** Создать новый продукт
@@ -479,7 +476,7 @@
 
 ## 📋 Пример использования
 
-```javascript
+```
 // Пример запроса на сканирование QR-кода
 const response = await fetch(
   "https://api.ptvem.com/api/v1/products/PTVEM-ABC123-XYZ789",
@@ -495,8 +492,6 @@ const response = await fetch(
 const productData = await response.json();
 console.log(productData);
 ```
-
-````
 
 **INSTRUCTIONS POUR VS CODE :**
 1. Ouvrez VS Code
