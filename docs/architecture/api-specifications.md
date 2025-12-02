@@ -1,85 +1,166 @@
-# 📋 **CODE COMPLET POUR API-SPECIFICATIONS.md**
+📋 CODE COMPLET POUR API-SPECIFICATIONS.md
+🔗 Спецификации API PTVEM
+Обзор
 
-# 🔗 Спецификации API PTVEM
+Полная документация REST API для платформы PTVEM — Prends Ta Vie En Main,
+включая сервисы продуктов, владения, историй, перепродажи, медиа, уведомлений, платежей и аналитики.
 
-## Обзор
+📦 API Сервиса Продуктов (Product Service)
+Базовый URL:
+https://api.ptvem.com/products
 
-Полная документация REST API для платформы PTVEM.
+🔍 GET /products/qr/{qrCode}
 
----
+Описание:
+Получить информацию о коллекции и связанных продуктах по QR-коду коллекции.
+⚠️ QR-код принадлежит коллекции, а не конкретному продукту.
 
-## 📦 API Сервиса Продуктов
+Параметры:
 
-### Базовый URL: `https://api.ptvem.com/products`
+qrCode (path) — уникальный QR-код коллекции
 
-#### GET /products/{qrCode}
-
-**Описание:** Получить информацию о продукте по QR-коду
-
-**Параметры:**
-
-- `qrCode` (path) - Уникальный QR-код продукта
-
-**Ответ:**
+Ответ:
 
 ```json
 {
-  "id": "prod_123",
-  "name": "Футболка PTVEM Limited Edition",
-  "description": "Стритвир футболка лимитированная серия",
-  "manufactureDate": "2024-01-15",
-  "designStory": "Вдохновлено уличным искусством Парижа...",
-  "currentOwner": {
-    "userId": "user_456",
-    "username": "fashion_lover",
-    "consent": true
+  "collection": {
+    "id": "col_501",
+    "code": "501",
+    "name": {
+      "fr": "PTVEM DROP 501",
+      "en": "PTVEM DROP 501",
+      "ru": "PTVEM ДРОП 501"
+    },
+    "description": {
+      "fr": "Описание коллекции...",
+      "en": "Collection description...",
+      "ru": "Описание коллекции..."
+    },
+    "designStory": {
+      "fr": "...",
+      "en": "...",
+      "ru": "..."
+    },
+    "qrCode": "PTVEM-501-QRABCXYZ",
+    "heroMediaId": "media_120"
   },
-  "qrCode": "PTVEM-ABC123-XYZ789"
+  "products": [
+    {
+      "id": "prod_987",
+      "serialNumber": "501-000987",
+      "categoryId": "cat_hoodie",
+      "name": {
+        "fr": "Худи DROP 501",
+        "en": "DROP 501 Hoodie",
+        "ru": "Худи DROP 501"
+      },
+      "status": "in_stock",
+      "primaryMediaId": "media_124"
+    }
+  ]
 }
 ```
-#### POST /products
 
-**Описание:** Создать новый продукт
+🆕 POST /products
 
-**Запрос:**
+Описание:
+Создать новый физический продукт (единицу одежды), принадлежащий коллекции.
+
+Запрос:
 
 ```json
 {
-  "name": "Новая футболка PTVEM",
-  "description": "Описание продукта",
-  "designStory": "История дизайна",
+  "collectionId": "col_501",
+  "categoryId": "cat_tshirt",
+  "serialNumber": "501-000123",
+
+  "name": {
+    "fr": "Футболка PTVEM",
+    "en": "PTVEM T-shirt",
+    "ru": "Футболка PTVEM"
+  },
+
+  "description": {
+    "fr": "Описание...",
+    "en": "Description...",
+    "ru": "Описание..."
+  },
+
   "materials": ["хлопок", "полиэстер"],
-  "collection": "Стритвир 2024"
+
+  "specifications": {
+    "size": "L",
+    "color": "Черный",
+    "material": "100% хлопок"
+  },
+
+  "manufactureDate": "2024-01-22"
 }
 ```
 
-**Ответ:**
+Ответ:
 
 ```json
 {
-  "id": "prod_123",
-  "qrCode": "PTVEM-ABC123-XYZ789",
+  "id": "prod_987",
+  "collectionId": "col_501",
+  "categoryId": "cat_tshirt",
+  "serialNumber": "501-000987",
+  "qrCode": "PTVEM-501-QRABCXYZ",
   "createdAt": "2024-01-20T10:30:00Z"
 }
 ```
 
-#### GET /products/{id}/details
+📄 GET /products/{id}/details
 
-**Описание:** Получить детальную информацию о продукте
+Описание:
+Получить детальную информацию о конкретном продукте.
 
-**Ответ:**
+Ответ:
 
 ```json
 {
-  "id": "prod_123",
-  "name": "Футболка PTVEM Limited Edition",
-  "fullDescription": "Детальное описание продукта...",
+  "id": "prod_987",
+  "serialNumber": "501-000987",
+
+  "name": {
+    "fr": "Худи DROP 501",
+    "en": "DROP 501 Hoodie",
+    "ru": "Худи DROP 501"
+  },
+
+  "description": {
+    "fr": "...",
+    "en": "...",
+    "ru": "..."
+  },
+
+  "category": {
+    "id": "cat_hoodie",
+    "name": {
+      "fr": "Hoodie",
+      "en": "Hoodie",
+      "ru": "Худи"
+    }
+  },
+
+  "collection": {
+    "id": "col_501",
+    "code": "501",
+    "qrCode": "PTVEM-501-QRABCXYZ"
+  },
+
+  "primaryMediaId": "media_124",
+
   "specifications": {
-    "material": "100% хлопок",
     "size": "L",
-    "color": "Черный",
-    "manufacturer": "PTVEM Studios"
-  }
+    "color": "Black",
+    "material": "100% cotton"
+  },
+
+  "materials": ["cotton"],
+  "manufactureDate": "2024-01-22",
+  "status": "in_stock"
 }
 ```
 
@@ -494,6 +575,7 @@ console.log(productData);
 ```
 
 **INSTRUCTIONS POUR VS CODE :**
+
 1. Ouvrez VS Code
 2. Ouvrez le fichier `docs/architecture/api-specifications.md`
 3. Sélectionnez TOUT (`Ctrl+A`)
@@ -503,8 +585,9 @@ console.log(productData);
 7. Faites le commit Git
 
 **COMMANDES GIT :**
+
 ```bash
 git add docs/architecture/api-specifications.md
 git commit -m "📚 Добавление полных спецификаций API"
 git push origin main
-````
+```

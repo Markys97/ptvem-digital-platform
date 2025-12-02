@@ -1,0 +1,35 @@
+@startuml
+title Architecture Globale - PTVEM Digital Platform
+
+package "Frontend" {
+  [Website Next.js]
+  [Mobile App (future)]
+  [Backoffice Admin]
+}
+
+package "PTVEM Microservices" {
+  [Product Service]
+  [Ownership Service]
+  [Resale / Marketplace Service]
+  [Story Service]
+  [Notification Service]
+  [Auth Service]
+  [Media/CDN Service (future)]
+}
+
+package "Databases" {
+  database MongoDB
+  database Redis
+}
+
+[Website Next.js] --> [Product Service]
+[Mobile App (future)] --> [Product Service]
+[Backoffice Admin] --> [Product Service]
+
+[Product Service] --> MongoDB
+[Ownership Service] --> MongoDB
+[Resale / Marketplace Service] --> MongoDB
+
+[Notification Service] --> Redis
+
+@enduml

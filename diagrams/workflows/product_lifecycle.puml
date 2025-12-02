@@ -1,0 +1,13 @@
+@startuml
+title Product Life Cycle
+
+start
+:Manufactured;
+:In Stock;
+:Sold;
+:Ownership Transfer\n(Ownership Service);
+:Returned;
+:Recycled/Destroyed;
+stop
+
+@enduml

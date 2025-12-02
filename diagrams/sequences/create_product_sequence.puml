@@ -1,0 +1,18 @@
+@startuml
+title CREATE PRODUCT Sequence
+
+actor User
+
+User -> ProductController : POST /products\nJSON payload
+ProductController -> ProductService : validate + createProduct()
+ProductService -> CollectionRepository : findById(collectionId)
+ProductService -> CategoryRepository : findById(categoryId)
+ProductService -> ProductRepository : create(product)
+ProductRepository -> ProductModel : save()
+
+ProductModel --> ProductRepository : product
+ProductRepository --> ProductService : product
+ProductService --> ProductController : productCreated
+ProductController --> User : 201 Created\n+ product JSON
+
+@enduml

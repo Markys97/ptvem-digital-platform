@@ -1,0 +1,48 @@
+@startuml
+title Product Service - Internal Architecture (Clean Architecture Inspired)
+
+package "API Layer" {
+  [ProductController]
+  [CollectionController]
+  [MediaController]
+  [CategoryController]
+}
+
+package "Service Layer" {
+  [ProductService]
+  [CollectionService]
+  [MediaService]
+  [CategoryService]
+}
+
+package "Repository Layer" {
+  [ProductRepository]
+  [CollectionRepository]
+  [MediaRepository]
+  [CategoryRepository]
+}
+
+package "Database Models" {
+  [ProductModel]
+  [CollectionModel]
+  [MediaAssetModel]
+  [ProductCategoryModel]
+}
+
+[ProductController] --> [ProductService]
+[ProductService] --> [ProductRepository]
+[ProductRepository] --> [ProductModel]
+
+[CollectionController] --> [CollectionService]
+[CollectionService] --> [CollectionRepository]
+[CollectionRepository] --> [CollectionModel]
+
+[MediaController] --> [MediaService]
+[MediaService] --> [MediaRepository]
+[MediaRepository] --> [MediaAssetModel]
+
+[CategoryController] --> [CategoryService]
+[CategoryService] --> [CategoryRepository]
+[CategoryRepository] --> [ProductCategoryModel]
+
+@enduml

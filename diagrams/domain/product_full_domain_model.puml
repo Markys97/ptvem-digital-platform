@@ -1,0 +1,61 @@
+@startuml
+title PTVEM - Product Domain Model (Full UML)
+
+class ProductCategory {
+  id : String
+  name : LocalizedString
+  code : String
+  description : LocalizedString
+  allowedSizes : String[]
+  metadata : Object
+}
+
+class Collection {
+  id : String
+  code : String
+  name : LocalizedString
+  description : LocalizedString
+  designStory : LocalizedString
+  qrCode : String
+  heroMediaId : String
+  promoMediaIds : String[]
+  metadata : Object
+}
+
+class Product {
+  id : String
+  collectionId : String
+  categoryId : String
+  serialNumber : String
+  name : LocalizedString
+  description : LocalizedString
+  primaryMediaId : String
+  specifications : Object
+  materials : String[]
+  manufactureDate : Date
+  status : String
+  qrCode : String
+  metadata : Object
+}
+
+class MediaAsset {
+  id : String
+  ownerType : Enum(PRODUCT, COLLECTION, CAMPAIGN)
+  ownerId : String
+  kind : Enum(IMAGE, VIDEO)
+  role : Enum(PRODUCT_GALLERY, PRODUCT_LIFESTYLE, COLLECTION_HERO, COLLECTION_PROMO, AD_CREATIVE)
+  variant : String
+  url : String
+  thumbnailUrl : String
+  altText : LocalizedString
+  metadata : Object
+  position : Number
+  isPrimary : Boolean
+}
+
+Product --> Collection : "belongs to"
+Product --> ProductCategory : "has category"
+MediaAsset --> Product : "attached to (ownerType=PRODUCT)"
+MediaAsset --> Collection : "attached to (ownerType=COLLECTION)"
+
+@enduml

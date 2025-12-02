@@ -1,0 +1,17 @@
+@startuml
+title Media Upload Workflow
+
+start
+:User selects file;
+:Frontend sends POST /media/upload;
+:Backend receives file;
+if (File valid?) then (yes)
+  :Save file to /uploads/...;
+  :Create MediaAsset document in DB;
+  :Return 201 + media JSON;
+else (no)
+  :Return 400 Bad Request;
+endif
+stop
+
+@enduml

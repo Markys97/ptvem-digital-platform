@@ -1,0 +1,14 @@
+@startuml
+title SCAN QR CODE Sequence (Collection QR)
+
+actor User
+
+User -> ProductController : GET /products/{qrCode}
+ProductController -> CollectionService : getByQrCode(qrCode)
+CollectionService -> CollectionRepository : findOne({ qrCode })
+
+CollectionRepository --> CollectionService : collection
+CollectionService --> ProductController : collectionPreview
+ProductController --> User : 200 OK\n+ collection JSON
+
+@enduml

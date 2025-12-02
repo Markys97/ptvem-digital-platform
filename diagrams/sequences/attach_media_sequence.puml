@@ -1,0 +1,19 @@
+@startuml
+title Attach Media to Product
+
+actor User
+
+User -> MediaController : POST /media/upload\nmultipart/form-data
+MediaController -> Uploader : saveLocalFile(file)
+Uploader --> MediaController : filePath
+
+MediaController -> MediaService : createMediaAsset(ownerType, ownerId, filePath,...)
+MediaService -> MediaRepository : save(media)
+MediaRepository -> MediaAssetModel : insertOne(media)
+
+MediaAssetModel --> MediaRepository : media
+MediaRepository --> MediaService : media
+MediaService --> MediaController : media
+MediaController --> User : 201 Created\n+ media JSON
+
+@enduml
