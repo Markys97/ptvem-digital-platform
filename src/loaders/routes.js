@@ -1,6 +1,6 @@
 // src/loaders/routes.js
 
-const productRoutes = require("../interfaces/http/routes/product.routes");
+const productRoutes = require("../modules/product/product.routes");
 
 module.exports = function initRoutes(app) {
   // Prefix global pour l'API

@@ -4,6 +4,8 @@ const router = Router();
 
 // Import des modules
 const productRoutes = require("./product/product.routes");
+const categoryRoutes = require("./category/category.routes");
+const collectionRoutes = require("./collection/collection.routes");
 
 // Health check (pour Kubernetes, Docker, monitoring…)
 router.get("/health", (req, res) => {
@@ -16,6 +18,8 @@ router.get("/health", (req, res) => {
 
 // Brancher Product Module
 router.use("/products", productRoutes);
+router.use("/categories", categoryRoutes);
+router.use("/collections", collectionRoutes);
 
 // Plus tard :
 // const collectionRoutes = require("./collection/collection.routes");
